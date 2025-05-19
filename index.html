@@ -73,7 +73,7 @@
   
 </head>
 <body>
-<p style="text-align:right;font-size:0.9rem;color:#666;margin-top:0;">Version 1.0.1</p>
+<p id="app-version" style="text-align:right;font-size:0.9rem;color:#666;margin-top:0;">Version loading…</p>
 
 <button id="reset-btn" class="reset-button">Reset All Notes</button>
 
@@ -179,7 +179,23 @@
       });
     });
   });
-</script>
+
+    // Update version label from cache name
+fetch('service-worker.js')
+  .then(res => res.text())
+  .then(text => {
+    const match = text.match(/'clue-sheet-cache-v(\d+\.\d+\.\d+)'/);
+    if (match) {
+      const version = match[1];
+      const versionLabel = document.getElementById('app-version');
+      if (versionLabel) versionLabel.textContent = 'Version ' + version;
+    }
+  })
+  .catch(err => console.warn('Unable to read version from service-worker.js:', err));
+
+
+
+  </script>
 </body>
 </html>
 
