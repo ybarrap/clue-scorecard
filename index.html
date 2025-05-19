@@ -160,7 +160,11 @@
       installButton.textContent = 'Install App';
       installButton.className = 'reset-button';
       installButton.style.backgroundColor = '#007b00';
-      document.body.insertBefore(installButton, document.body.firstChild);
+      if (document.body.firstChild) {
+        document.body.insertBefore(installButton, document.body.firstChild);
+      } else {
+        document.body.appendChild(installButton);
+      }
       installButton.addEventListener('click', () => {
         installButton.remove();
         deferredPrompt.prompt();
